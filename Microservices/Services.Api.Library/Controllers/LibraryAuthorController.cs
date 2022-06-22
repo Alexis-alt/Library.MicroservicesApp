@@ -22,8 +22,8 @@ namespace Services.Api.Library.Controllers
         }
 
 
-       [HttpGet]
-       public async Task<ActionResult<IEnumerable<AuthorEntity>>> GetAll()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<AuthorEntity>>> GetAll()
         {
 
             return Ok(await _mongoRepositoryAuthor.GetAll());
@@ -47,12 +47,12 @@ namespace Services.Api.Library.Controllers
         }
 
 
-         [HttpPut("{id}")]   
-         public async Task<IActionResult> Update(string id, AuthorEntity author)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(string id, AuthorEntity author)
         {
             author.Id = id;
 
-           await _mongoRepositoryAuthor.Update(author);
+            await _mongoRepositoryAuthor.Update(author);
 
             return Ok();
         }
@@ -68,6 +68,17 @@ namespace Services.Api.Library.Controllers
         }
 
 
+        [HttpPost]
+        [Route("pagination")]
+        public async Task<ActionResult<PaginationEntity<AuthorEntity>>> SetPagination(PaginationEntity<AuthorEntity> pagination)
+        {
+
+            //Estamos filtrando por el nombre
+            var resultados = await _mongoRepositoryAuthor.PaginationByFilter(pagination);
+
+            return Ok(resultados);
+
+        } 
 
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Services.Api.Library.IRepository
@@ -17,6 +18,10 @@ namespace Services.Api.Library.IRepository
         Task Update(T document);
 
         Task DeleteById(string Id);
+
+        Task<PaginationEntity<T>> PaginationBy(Expression<Func<T,bool>> filter,PaginationEntity<T> pagination);
+
+        Task<PaginationEntity<T>> PaginationByFilter(PaginationEntity<T> pagination);
 
 
     }
